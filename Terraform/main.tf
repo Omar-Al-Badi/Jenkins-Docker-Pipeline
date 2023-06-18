@@ -1,6 +1,6 @@
 provider "aws" {
   profile = "DevOps_Omar"
-  region  = "us-east-1"
+  region  = "eu-north-1"
 }
 
 data "aws_ami" "ubuntu" {
@@ -33,14 +33,14 @@ resource "aws_key_pair" "kp" {
   }
 }
 
-resource "aws_instance" "Jenkins-t2-micro" {
+resource "aws_instance" "Jenkins-t3-small" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
+  instance_type = "t3.small"
   key_name      = aws_key_pair.kp.key_name
   vpc_security_group_ids = [aws_security_group.main.id]
 
   tags = {
-    Name = "Jenkins-t2-micro"
+    Name = "Jenkins-t3-small"
   }
 
   root_block_device {
@@ -54,37 +54,7 @@ resource "aws_instance" "Jenkins-t2-micro" {
       type        = "ssh"
       user        = "ubuntu"
       private_key = tls_private_key.pk.private_key_pem
-      host        = aws_instance.Jenkins-t2-micro.public_ip
-    }
-  }
-
-  provisioner "local-exec" {
-    command = "ansible-playbook -i '${self.public_ip},' --private-key ~/.ssh/jenkins-key.pem provision.yaml"
-  }
-}
-
-resource "aws_instance" "Server-t3a-medium" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3a.medium"
-  key_name      = aws_key_pair.kp.key_name
-  vpc_security_group_ids = [aws_security_group.main.id]
-
-  tags = {
-    Name = "Server-t3a-medium"
-  }
-
-  root_block_device {
-    volume_size = 25
-  }
-
-  provisioner "remote-exec" {
-    inline = ["echo 'Wait until SSH is ready'"]
-
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = tls_private_key.pk.private_key_pem
-      host        = aws_instance.Server-t3a-medium.public_ip
+      host        = aws_instance.Jenkins-t3-small.public_ip
     }
   }
 
@@ -121,14 +91,7 @@ resource "aws_security_group" "main" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
-   ingress {
-    from_port = 3000
-    to_port   = 3000 
-    protocol  = "tcp"
-    cidr_blocks  = ["0.0.0.0/0"]
-  }
-  
+
    ingress {
     from_port = 3000
     to_port   = 3000 

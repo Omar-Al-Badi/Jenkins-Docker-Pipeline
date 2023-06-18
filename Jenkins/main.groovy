@@ -5,16 +5,24 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 git(
-                    url: 'https://github.com/Omar-Al-Badi/Multi-Container-App.git',
+                    url: 'https://github.com/Omar-Al-Badi/Jenkins-Docker-Pipeline.git',
                     branch: 'main'
                 )
             }
         }
 
-        stage('Expose App to Port 3000') {
+        stage('Stop Previous Container') {
             steps {
                 script {
-                    sh 'docker compose up'
+                    sh 'docker-compose down'
+                }
+            }
+        }
+
+        stage('Docker Compose Up') {
+            steps {
+                script {
+                    sh 'docker-compose up -d'
                 }
             }
         }
