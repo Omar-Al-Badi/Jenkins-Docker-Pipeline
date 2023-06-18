@@ -5,7 +5,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 git(
-                    url: 'https://github.com/Omar-Al-Badi/Multi-Container-App.git',
+                    url: 'https://github.com/Omar-Al-Badi/Jenkins-Docker-Pipeline.git',
                     branch: 'main'
                 )
             }
