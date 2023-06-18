@@ -11,7 +11,11 @@ pipeline {
             }
         }
 
+<<<<<<< HEAD
         stage('Stop Previous Container') {
+=======
+        stage('Docker Compose Up') {
+>>>>>>> 33bb47ea50a172b18c39404412943cc4903ebefd
             steps {
                 script {
                     sh 'docker-compose down'
