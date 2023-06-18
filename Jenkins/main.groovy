@@ -11,7 +11,7 @@ pipeline {
             }
         }
 
-        stage('Expose App to Port 3000') {
+        stage('Docker Compose Up') {
             steps {
                 script {
                     sh 'docker compose up'
