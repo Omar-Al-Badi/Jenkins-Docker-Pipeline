@@ -6,7 +6,7 @@ services:
     volumes:
       - ./src:/var/www/html
     ports:
-      - 3000:80
+      - 3000:3000
     depends_on:
       - mysql_db
 
@@ -21,6 +21,6 @@ services:
     image: phpmyadmin:latest
     restart: always
     ports:
-      - 4000:80
+      - 4000:4000
     environment:
       - PMA_ARBITRARY=1
