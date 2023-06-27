@@ -1,11 +1,10 @@
 <?php
 
-$con = new mysqli("mysql_db","root","root","mysql");
+$con = new mysqli("MariaDB_db", "root", "root", "mysql");
 
 if ($con) {
-    echo "Success";
+   echo "Success";
 } else {
-    echo "Error";
+   echo "Error";
 }
-
 ?>

@@ -2,25 +2,22 @@ version: '3.9'
 
 services:
   php-env:
-    image: php:8.0-apache
+    build: .
     volumes:
       - ./src:/var/www/html
     ports:
-      - 3000:80
-    depends_on:
-      - mysql_db
+      - 9000:80
 
-  mysql_db:
-    image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password
+  MariaDB_db:
+    image: mariadb
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MARIADB_ROOT_PASSWORD: root
 
   phpmyadmin:
     image: phpmyadmin:latest
     restart: always
     ports:
-      - 4000:80
+      - 9001:80
     environment:
       - PMA_ARBITRARY=1
