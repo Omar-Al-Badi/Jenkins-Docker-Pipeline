@@ -1,7 +1,7 @@
 <?php
 
 
-$con = new mysqli("mysql_db","root","root","mysql");
+$con = new mysqli("mysql_server","root","root","mysql");
 
 
 if ($con) {
